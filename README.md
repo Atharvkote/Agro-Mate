@@ -103,7 +103,7 @@ Content-Type: application/json
   "temperature": 26.5,
   "humidity": 43,
   "moisture": 382
-}, withCradentials:Trur
+}
 ```
 
 
