@@ -94,9 +94,8 @@ npm run dev
 ## 📬 API Example (POST)
 
 ```http
-POST /api/npk
+POST /api/esp32/addData
 Content-Type: application/json
-
 {
   "nitrogen": 45,
   "phosphorus": 30,
@@ -104,7 +103,7 @@ Content-Type: application/json
   "temperature": 26.5,
   "humidity": 43,
   "moisture": 382
-}
+}, withCradentials:Trur
 ```
 
 
