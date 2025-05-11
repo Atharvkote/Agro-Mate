@@ -110,7 +110,9 @@ Content-Type: application/json
 
 ## 📊 Live Dashboard Preview
 
-> Coming soon: Add screenshots or hosted demo link
+![Image](./output-snapshots/Home-Screen.png)
+![Image](./output-snapshots/DashBoard.jpg)
+![Image](./output-snapshots/History.png)
 
 
 
