@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Logo from "@/public/agroLogo.png";
-import { AlertTitle } from "@/components/UI/alert";
+import { AlertTitle } from "../../components/UI/alert";
 
 export default function Home() {
   return (

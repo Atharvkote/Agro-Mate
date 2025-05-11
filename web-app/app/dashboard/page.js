@@ -10,8 +10,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Button } from "../../components/UI/button";
+import { Card } from "../../components/UI/card";
 import { SoilMetricCard } from "@/components/SoilMetricCard";
 import { MetricGauge } from "@/components/MetricGauge";
 

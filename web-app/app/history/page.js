@@ -22,28 +22,28 @@ import {
   getPhosphorusStatus,
   getPotassiumStatus,
 } from "@/functions/ReadingStatus";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../components/UI/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
   CardDescription,
-} from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
+} from "../../components/UI/card";
+import { Skeleton } from "../../components/UI/skeleton";
+import { Badge } from "../../components/UI/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "../../components/UI/dropdown-menu";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "../../components/UI/tooltip";
 
 export default function Home() {
   const [sensorData, setSensorData] = useState([]);
