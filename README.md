@@ -1,4 +1,4 @@
-# 🌐 AgroMate Web App (Frontend + API)
+# SMARTs IOT System + AgroMate Web App
 
 This is the **web dashboard** and backend API server for **AgroMate** — a smart soil health monitoring system. Built with **Next.js**, it displays real-time and historical data from soil sensors (NPK, DHT11, Soil Moisture) stored in **MongoDB**.
 
