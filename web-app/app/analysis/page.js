@@ -42,16 +42,16 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "../../components/UI/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/UI/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from "../../components/UI/select";
+import { Button } from "../../components/UI/button";
 import { ChartContainer } from "../../components/UI/chart";
 import axios from "axios";
 
