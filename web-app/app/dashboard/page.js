@@ -30,16 +30,6 @@ export default function DashboardContent() {
         console.log(data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        // setCurrentData({
-        //   temperature: 24,
-        //   humidity: 65,
-        //   moisture: 42,
-        //   ph: 6.8,
-        //   nitrogen: 35,
-        //   phosphorus: 28,
-        //   potassium: 45,
-        //   lastUpdated: new Date().toISOString(),
-        // })
       } finally {
         setLoading(false);
       }
@@ -98,17 +88,6 @@ export default function DashboardContent() {
       optMax: 65,
     },
     {
-      title: "Soil pH",
-      value: data.ph,
-      unit: "pH",
-      icon: <FlaskRound className="h-5 w-5" />,
-      color: "purple",
-      min: 0,
-      max: 14,
-      optMin: 6,
-      optMax: 7.5,
-    },
-    {
       title: "Nitrogen",
       value: data.nitrogen,
       unit: "ppm",
@@ -141,6 +120,17 @@ export default function DashboardContent() {
       optMin: 30,
       optMax: 70,
     },
+    {
+      title: "Soil pH",
+      value: data.ph,
+      unit: "pH",
+      icon: <FlaskRound className="h-5 w-5" />,
+      color: "purple",
+      min: 0,
+      max: 14,
+      optMin: 6,
+      optMax: 7.5,
+    },
   ];
 
   return (
@@ -148,7 +138,7 @@ export default function DashboardContent() {
       <main className="container mx-auto  py-8">
         <div className="mb-6 flex flex-col gap-2">
           <div className="flex flex-col lg:flex-row gap-4 lg:items-center justify-between">
-            <h2 className="text-lg flex justify-center items-center gap-5 lg:text-3xl px-5 py-3 w-3/4 lg:w-1/2  font-bold bg-green-700 rounded-tr-xl rounded-br-xl  text-white">
+            <h2 className="text-lg flex justify-center items-center gap-5 lg:text-3xl px-5 py-3 w-3/4 lg:w-1/2  font-bold bg-green-700 rounded-xl  text-white">
               Current Readings
             </h2>
             <div className="mx-5 font-semibold text-md flex items-center gap-1 text-black border-2 border-green-700 rounded-lg  px-4 py-2 lg:w-1/4 bg-green-200">

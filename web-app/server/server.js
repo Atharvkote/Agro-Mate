@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { timeStamp } = require("console");
 require("dotenv").config();
 
 const app = express();
@@ -85,7 +86,7 @@ app.get("/api/fetch", async (req, res) => {
 
 app.get("/api/fetch/latest", async (req, res) => {
   try {
-    const data = await DHTModel.findOne();
+    const data = await DHTModel.findOne().sort({ timestamp :1 }).limit(1);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -125,17 +126,15 @@ app.get("/api/fetch/average", async (req, res) => {
           _id: null,
           avgHumidity: { $avg: "$humidity" },
           avgMoisture: { $avg: "$moisture" },
-          avgTemperture: { $avg: "$temperature" }
-        }
-      }
-    ])
+          avgTemperture: { $avg: "$temperature" },
+        },
+      },
+    ]);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 
 // Start Server
 const PORT = process.env.PORT || 5000;

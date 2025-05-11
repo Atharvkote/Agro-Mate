@@ -75,8 +75,8 @@ const Navbar = () => {
                   key={key}
                   onClick={() => setView(key)}
                   className={cn(
-                    "px-3 py-2 rounded-md transition-colors flex items-center",
-                    view === key ? "bg-green-100 text-green-700 font-medium" : "text-gray-600 hover:bg-gray-100",
+                    "px-3 py-2 rounded-md cursor-pointer transition-colors flex items-center",
+                    view === key ? "bg-green-100  text-green-700 font-medium" : "text-gray-600 hover:bg-gray-100",
                   )}
                 >
                   <Icon className="h-5 w-5 mr-1" />

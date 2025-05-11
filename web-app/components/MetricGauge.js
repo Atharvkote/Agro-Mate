@@ -114,206 +114,160 @@ const colorSchemeMap = {
   },
 }
 
-
 export function MetricGauge({ value, min, max, optimumMin, optimumMax, colorScheme = "green" }) {
-  const canvasRef = useRef(null)
-  const [animatedValue, setAnimatedValue] = useState(min)
-  const [statusText, setStatusText] = useState("Optimal")
-  const [statusColor, setStatusColor] = useState("text-green-600")
+  const canvasRef = useRef(null);
+  const [animatedValue, setAnimatedValue] = useState(min);
+  const [statusText, setStatusText] = useState("Optimal");
+  const [statusColor, setStatusColor] = useState("text-green-600");
 
-  const colors = colorSchemeMap[colorScheme] || colorSchemeMap.green
+  const colors = colorSchemeMap[colorScheme] || colorSchemeMap.green;
+
+  // Calculate moisture percentage
+  const moisturePercent = 100 - (value / 1023) * 100;
 
   useEffect(() => {
     // Animate the value change
-    const startValue = animatedValue
-    const endValue = isNaN(value) ? min : value
-    const duration = 1000
-    const startTime = performance.now()
+    const startValue = animatedValue;
+    const endValue = isNaN(moisturePercent) ? min : moisturePercent;
+    const duration = 1000;
+    const startTime = performance.now();
 
     const animateValue = (currentTime) => {
-      const elapsedTime = currentTime - startTime
-      const progress = Math.min(elapsedTime / duration, 1)
-      // Use easeOutQuad for smoother animation
-      const easeProgress = 1 - (1 - progress) * (1 - progress)
-      const currentValue = startValue + (endValue - startValue) * easeProgress
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const easeProgress = 1 - (1 - progress) * (1 - progress);
+      const currentValue = startValue + (endValue - startValue) * easeProgress;
 
-      setAnimatedValue(currentValue)
+      setAnimatedValue(currentValue);
 
       if (progress < 1) {
-        requestAnimationFrame(animateValue)
+        requestAnimationFrame(animateValue);
       }
-    }
+    };
 
-    requestAnimationFrame(animateValue)
-  }, [value, min])
+    requestAnimationFrame(animateValue);
+  }, [moisturePercent, min]);
 
   useEffect(() => {
     // Update status text and color based on animated value
     if (animatedValue < optimumMin) {
-      setStatusText("Low")
-      setStatusColor(colors.lowText)
+      setStatusText("Low");
+      setStatusColor(colors.lowText);
     } else if (animatedValue > optimumMax) {
-      setStatusText("High")
-      setStatusColor(colors.highText)
+      setStatusText("High");
+      setStatusColor(colors.highText);
     } else {
-      setStatusText("Optimal")
-      setStatusColor(colors.optimumText)
+      setStatusText("Optimal");
+      setStatusColor(colors.optimumText);
     }
-  }, [animatedValue, optimumMin, optimumMax, colors])
+  }, [animatedValue, optimumMin, optimumMax, colors]);
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
     // Set up dimensions
-    const width = canvas.width
-    const height = canvas.height
-    const centerX = width / 2
-    const centerY = height * 0.75 // Position gauge lower in canvas
-    const radius = Math.min(width, height) * 0.4
+    const width = canvas.width;
+    const height = canvas.height;
+    const centerX = width / 2;
+    const centerY = height * 0.75; // Position gauge lower in canvas
+    const radius = Math.min(width, height) * 0.4;
 
     // Define angles (in radians)
-    const startAngle = Math.PI * 0.8 // Start at 144 degrees
-    const endAngle = Math.PI * 0.2 // End at 36 degrees
-    const totalAngle = 2 * Math.PI - (endAngle - startAngle)
+    const startAngle = Math.PI * 0.8; // Start at 144 degrees
+    const endAngle = Math.PI * 0.2; // End at 36 degrees
+    const totalAngle = 2 * Math.PI - (endAngle - startAngle);
 
     // Clear canvas
-    ctx.clearRect(0, 0, width, height)
+    ctx.clearRect(0, 0, width, height);
 
     // Draw gauge background (light gray)
-    ctx.beginPath()
-    ctx.arc(centerX, centerY, radius, startAngle, startAngle + totalAngle)
-    ctx.lineWidth = 20
-    ctx.strokeStyle = "#e5e7eb" // Light gray
-    ctx.stroke()
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, startAngle, startAngle + totalAngle);
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = "#e5e7eb"; // Light gray
+    ctx.stroke();
 
     // Calculate angles for different ranges
-    const minAngle = startAngle
-    const maxAngle = startAngle + totalAngle
-    const optimumMinAngle = minAngle + ((optimumMin - min) / (max - min)) * totalAngle
-    const optimumMaxAngle = minAngle + ((optimumMax - min) / (max - min)) * totalAngle
+    const minAngle = startAngle;
+    const maxAngle = startAngle + totalAngle;
+    const optimumMinAngle = minAngle + ((optimumMin - min) / (max - min)) * totalAngle;
+    const optimumMaxAngle = minAngle + ((optimumMax - min) / (max - min)) * totalAngle;
 
     // Draw low range
-    ctx.beginPath()
-    ctx.arc(centerX, centerY, radius, minAngle, optimumMinAngle)
-    ctx.lineWidth = 20
-    ctx.strokeStyle = colors.low
-    ctx.stroke()
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, minAngle, optimumMinAngle);
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = colors.low;
+    ctx.stroke();
 
     // Draw optimum range with gradient
     const gradient = ctx.createLinearGradient(
       centerX + radius * Math.cos(optimumMinAngle),
       centerY + radius * Math.sin(optimumMinAngle),
       centerX + radius * Math.cos(optimumMaxAngle),
-      centerY + radius * Math.sin(optimumMaxAngle),
-    )
-    gradient.addColorStop(0, colors.optimum[0])
-    gradient.addColorStop(1, colors.optimum[1])
+      centerY + radius * Math.sin(optimumMaxAngle)
+    );
+    gradient.addColorStop(0, colors.optimum[0]);
+    gradient.addColorStop(1, colors.optimum[1]);
 
-    ctx.beginPath()
-    ctx.arc(centerX, centerY, radius, optimumMinAngle, optimumMaxAngle)
-    ctx.lineWidth = 20
-    ctx.strokeStyle = gradient
-    ctx.stroke()
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, optimumMinAngle, optimumMaxAngle);
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = gradient;
+    ctx.stroke();
 
     // Draw high range
-    ctx.beginPath()
-    ctx.arc(centerX, centerY, radius, optimumMaxAngle, maxAngle)
-    ctx.lineWidth = 20
-    ctx.strokeStyle = colors.high
-    ctx.stroke()
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, optimumMaxAngle, maxAngle);
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = colors.high;
+    ctx.stroke();
 
-    // Draw tick marks and labels
-    const tickLength = 10
-    const labelRadius = radius + 25
-
-    // Draw min, max, and optimum ticks and labels
-    const tickPositions = [
-      { value: min, angle: minAngle, label: min.toString() },
-      { value: optimumMin, angle: optimumMinAngle, label: optimumMin.toString() },
-      { value: optimumMax, angle: optimumMaxAngle, label: optimumMax.toString() },
-      { value: max, angle: maxAngle, label: max.toString() },
-    ]
-
-    ctx.font = "12px sans-serif"
-    ctx.fillStyle = "#6b7280" // Gray-500
-    ctx.textAlign = "center"
-    ctx.textBaseline = "middle"
-
-   
     // Calculate needle angle based on animated value
-    const valueAngle = minAngle + ((animatedValue - min) / (max - min)) * totalAngle
+    const valueAngle = minAngle + ((animatedValue - min) / (max - min)) * totalAngle;
 
     // Draw needle
-    const needleLength = radius * 0.85
-    const needleBaseWidth = 8
-    const needleTipWidth = 1
+    const needleLength = radius * 0.85;
+    const needleBaseWidth = 8;
 
-    // Create needle path
-    ctx.beginPath()
+    const tipX = centerX + needleLength * Math.cos(valueAngle);
+    const tipY = centerY + needleLength * Math.sin(valueAngle);
 
-    // Calculate needle points
-    const tipX = centerX + needleLength * Math.cos(valueAngle)
-    const tipY = centerY + needleLength * Math.sin(valueAngle)
+    const baseLeftX = centerX + needleBaseWidth * Math.cos(valueAngle + Math.PI / 2);
+    const baseLeftY = centerY + needleBaseWidth * Math.sin(valueAngle + Math.PI / 2);
 
-    const baseLeftX = centerX + needleBaseWidth * Math.cos(valueAngle + Math.PI / 2)
-    const baseLeftY = centerY + needleBaseWidth * Math.sin(valueAngle + Math.PI / 2)
+    const baseRightX = centerX + needleBaseWidth * Math.cos(valueAngle - Math.PI / 2);
+    const baseRightY = centerY + needleBaseWidth * Math.sin(valueAngle - Math.PI / 2);
 
-    const baseRightX = centerX + needleBaseWidth * Math.cos(valueAngle - Math.PI / 2)
-    const baseRightY = centerY + needleBaseWidth * Math.sin(valueAngle - Math.PI / 2)
+    ctx.beginPath();
+    ctx.moveTo(tipX, tipY);
+    ctx.lineTo(baseLeftX, baseLeftY);
+    ctx.lineTo(baseRightX, baseRightY);
+    ctx.closePath();
 
-    // Draw needle triangle
-    ctx.beginPath()
-    ctx.moveTo(tipX, tipY)
-    ctx.lineTo(baseLeftX, baseLeftY)
-    ctx.lineTo(baseRightX, baseRightY)
-    ctx.closePath()
-
-    // Create gradient for needle
-    const needleGradient = ctx.createLinearGradient(centerX, centerY, tipX, tipY)
-    needleGradient.addColorStop(0, colors.needle)
-    needleGradient.addColorStop(1, colors.needle + "99") // Add transparency at tip
-
-    ctx.fillStyle = needleGradient
-    ctx.fill()
-
-    // Add shadow to needle
-    ctx.shadowColor = "rgba(0, 0, 0, 0.3)"
-    ctx.shadowBlur = 5
-    ctx.shadowOffsetX = 2
-    ctx.shadowOffsetY = 2
+    ctx.fillStyle = colors.needle;
+    ctx.fill();
 
     // Draw needle center cap
-    ctx.beginPath()
-    ctx.arc(centerX, centerY, 10, 0, Math.PI * 2)
-    ctx.fillStyle = "#ffffff"
-    ctx.fill()
-    ctx.strokeStyle = colors.needle
-    ctx.lineWidth = 2
-    ctx.stroke()
-
-    // Reset shadow
-    ctx.shadowColor = "transparent"
-    ctx.shadowBlur = 0
-    ctx.shadowOffsetX = 0
-    ctx.shadowOffsetY = 0
-
-    // Draw inner circle of cap
-    ctx.beginPath()
-    ctx.arc(centerX, centerY, 5, 0, Math.PI * 2)
-    ctx.fillStyle = colors.needle
-    ctx.fill()
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 10, 0, Math.PI * 2);
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.strokeStyle = colors.needle;
+    ctx.lineWidth = 2;
+    ctx.stroke();
 
     // Draw value text
-    ctx.font = "bold 16px sans-serif"
-    ctx.fillStyle = colors.needle
-    ctx.textAlign = "center"
-    ctx.textBaseline = "middle"
-    ctx.fillText(animatedValue.toFixed(1), centerX, centerY + radius * 0.5)
-  }, [animatedValue, min, max, optimumMin, optimumMax, colorScheme, colors])
+    ctx.font = "bold 16px sans-serif";
+    ctx.fillStyle = colors.needle;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(animatedValue.toFixed(1), centerX, centerY + radius * 0.5);
+  }, [animatedValue, min, max, optimumMin, optimumMax, colors]);
 
   return (
     <div className="w-full">
@@ -322,5 +276,5 @@ export function MetricGauge({ value, min, max, optimumMin, optimumMax, colorSche
         <span className={`font-semibold ${statusColor}`}>{statusText}</span>
       </div>
     </div>
-  )
+  );
 }

@@ -109,7 +109,7 @@ export default function Home() {
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-6">
           <div className="w-full flex flex-col">
-            <h1 className="text-lg flex justify-center items-center gap-5 lg:text-3xl px-5 py-3 w-3/4 lg:w-1/2  font-bold bg-green-700 rounded-tr-xl rounded-br-xl  text-white">
+            <h1 className="text-lg flex justify-center items-center gap-5 lg:text-3xl px-5 py-3 w-3/4 lg:w-1/2  font-bold bg-green-700 rounded-xl  text-white">
               <Cpu className="w-7 h-7" /> Sensor Readings
             </h1>
             <p className="text-gray-600 px-5 flex items-center gap-1 text-md lg:text-lg font-semibold my-1">
@@ -444,9 +444,10 @@ function TableHeader({ label, field, handleSort, sortIcon, icon }) {
 
 function SensorCell({ value, prevValue, status, precision = 0 }) {
   const isMissing = value === null || value === undefined || value === "--";
+  const numericValue = isMissing ? null : Number(value); // Ensure value is a number
   const diff =
     !isMissing && prevValue !== null && prevValue !== undefined
-      ? value - prevValue
+      ? numericValue - prevValue
       : null;
   const significantChange = diff !== null && Math.abs(diff) >= 2;
 
@@ -454,7 +455,7 @@ function SensorCell({ value, prevValue, status, precision = 0 }) {
     <td className="p-3 border-b border-green-100 dark:border-green-800">
       <div className="flex items-center gap-2">
         <span className="font-medium">
-          {isMissing ? "--" : value.toFixed(precision)}
+          {isMissing ? "--" : numericValue.toFixed(precision)}
         </span>
 
         {diff !== null && significantChange && (
@@ -512,7 +513,6 @@ function SensorCell({ value, prevValue, status, precision = 0 }) {
     </td>
   );
 }
-
 // Icon components for summary cards
 function TempIcon({ status }) {
   const color =

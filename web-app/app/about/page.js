@@ -34,7 +34,7 @@ const teamMembers = [
   },
   {
     name: "Bhushan Korde",
-    image: F,
+    image: M,
     github: "https://github.com/bhushankorde",
     linkedin: "https://linkedin.com/in/bhushankorde",
     twitter: "https://twitter.com/bhushankorde",
@@ -143,7 +143,7 @@ export default function Page() {
                   Our Leadership Team
                 </h2>
                 <p className="max-w-[900px] text-gray-500 md:text-xl">
-                  Meet the experts behind Agromate's innovative agricultural
+                  Meet the experts behind Agromate&apos;s innovative agricultural
                   solutions.
                 </p>
               </div>
@@ -213,7 +213,7 @@ export default function Page() {
                   Our Journey
                 </h2>
                 <p className="max-w-[900px] text-gray-500 md:text-xl">
-                  Key milestones in Agromate's evolution.
+                  Key milestones in Agromate&apos;s evolution.
                 </p>
               </div>
             </div>
