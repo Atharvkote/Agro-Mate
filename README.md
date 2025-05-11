@@ -23,6 +23,17 @@ This is the **web dashboard** and backend API server for **AgroMate** — a smar
 ## 📁 Folder Structure
 
 ```
+arduino/
+├── docs/
+│   ├── arduino_microcontroller.md     # Info about Arduino Uno/Nano setup
+│   ├── dht11_sensor.md                # DHT11 wiring and usage
+│   ├── esp32_microcontroller.md       # ESP32 setup guide
+│   └── soil_moisture.md               # Capacitive soil moisture guide
+├── sketches/
+│   ├── SensorReader.ino               # Reads NPK + DHT11 + Soil Moisture
+│   └── WifiModule.ino                 # Sends data to server via Wi-Fi
+└── README.md                          # This file
+
 web-app/
 ├── app/                   # App routing and layout (Next.js app directory)
 ├── components/            # React UI components (charts, cards, etc.)
