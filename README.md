@@ -19,6 +19,37 @@ This is the **web dashboard** and backend API server for **AgroMate** — a smar
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 ![Canva](https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white)
 
+## 🧱 System Architecture 
+
+```mermaid
+graph TD
+
+    1767["User<br>External Actor"]
+    subgraph 1757["External Systems"]
+        1766["Database<br>MongoDB"]
+    end
+    subgraph 1758["Arduino Firmware<br>Arduino/C++"]
+        1765["Sensor &amp; Comm Firmware<br>Arduino/C++"]
+    end
+    subgraph 1759["Backend Services<br>Node.js/Express"]
+        1764["API Server<br>Node.js/Express"]
+    end
+    subgraph 1760["Web Application<br>Next.js/React"]
+        1761["Application Shell<br>Next.js/React"]
+        1762["Application Pages<br>Next.js/React"]
+        1763["UI Components &amp; Utilities<br>React/JS"]
+        %% Edges at this level (grouped by source)
+        1761["Application Shell<br>Next.js/React"] -->|renders| 1762["Application Pages<br>Next.js/React"]
+        1761["Application Shell<br>Next.js/React"] -->|uses| 1763["UI Components &amp; Utilities<br>React/JS"]
+        1762["Application Pages<br>Next.js/React"] -->|uses| 1763["UI Components &amp; Utilities<br>React/JS"]
+    end
+    %% Edges at this level (grouped by source)
+    1767["User<br>External Actor"] -->|interacts with| 1761["Application Shell<br>Next.js/React"]
+    1762["Application Pages<br>Next.js/React"] -->|fetches data from| 1764["API Server<br>Node.js/Express"]
+    1765["Sensor &amp; Comm Firmware<br>Arduino/C++"] -->|sends sensor data| 1764["API Server<br>Node.js/Express"]
+    1764["API Server<br>Node.js/Express"] -->|persists/queries| 1766["Database<br>MongoDB"]
+
+```
 
 ## 📁 Folder Structure
 
