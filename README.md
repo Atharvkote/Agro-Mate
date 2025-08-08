@@ -1,9 +1,14 @@
 # SMARTs IOT System + AgroMate Web App
 
+
 This is the **web dashboard** and backend API server for **AgroMate** — a smart soil health monitoring system. Built with **Next.js**, it displays real-time and historical data from soil sensors (NPK, DHT11, Soil Moisture) stored in **MongoDB**.
+
+![Home](./output-snapshots/Home-Screen.png)
 
 
 ##  System Architecture 
+
+##  Agromate + SMARTs
 
 ```mermaid
 graph TD
@@ -32,6 +37,7 @@ graph TD
     1762["Application Pages<br>Next.js/React"] -->|fetches data from| 1764["API Server<br>Node.js/Express"]
     1765["Sensor &amp; Comm Firmware<br>Arduino/C++"] -->|sends sensor data| 1764["API Server<br>Node.js/Express"]
     1764["API Server<br>Node.js/Express"] -->|persists/queries| 1766["Database<br>MongoDB"]
+
 
 ```
 
@@ -70,35 +76,14 @@ npm run dev
 *  **Data Sync**: Push data from ESP32 or Arduino using HTTP POST
 
 
-
-## 📬 API Example (POST)
-
-```http
-POST /api/esp32/addData
-Content-Type: application/json
-{
-  "nitrogen": 45,
-  "phosphorus": 30,
-  "potassium": 50,
-  "temperature": 26.5,
-  "humidity": 43,
-  "moisture": 382
-}
-```
-
-
 ##  Live Dashboard Preview
 
-![Image](Absolutely! Here’s a **refined, professional README** for your **SMARTs IOT System + AgroMate Web App**, modeled in the style of your scalable chat app README —
-with clear **sections, tables, mermaid diagrams, folder structure, and example snippets**.
+| Dashboard | Sensor Data History |
+|-----------|---------------------|
+|![Home](./output-snapshots/DashBoard.jpg)|![Home](./output-snapshots/History.png)|
 
 
-#  SMARTs IOT System + AgroMate Web App
 
-This project powers **AgroMate** — a **smart soil health monitoring system**.
-It combines an **Arduino-based sensor system** (for NPK, DHT11, Soil Moisture) with a **Next.js web dashboard** that visualizes real-time and historical data stored in **MongoDB**.
-
-![Home](./output-snapshots/Home-Screen.png)
 
 
 ## ⚙️ Tech Stack Overview
@@ -115,17 +100,6 @@ It combines an **Arduino-based sensor system** (for NPK, DHT11, Soil Moisture) w
 | ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge\&logo=figma\&logoColor=white)                    | Design tool        | UI mockups & wireframes                                  |
 
 
-## 🏗️ System Architecture
-
-### Architecture Overview
-
-```mermaid
-flowchart TD
-    S[Arduino Sensors<br>NPK + DHT11 + Moisture] -->|HTTP POST JSON| A[API Server<br>Node.js / Express]
-    A -->|Stores readings| M[MongoDB]
-    W[User / Browser] -->|Accesses| D[Next.js Dashboard]
-    D -->|Fetches API| A
-```
 
 
 ### Modules & Flow
@@ -138,32 +112,8 @@ flowchart TD
 | Next.js Web Dashboard | Displays real-time + historical charts to farmers                 |
 
 
-##  Project Structure
 
-```
-arduino/
-├── docs/                  # Guides for wiring & config
-├── sketches/              # .ino files for reading & sending data
-
-web-app/
-├── app/                   # Next.js routing, layouts
-├── components/            # Reusable React UI (charts, cards)
-├── functions/             # Data utilities
-├── hooks/                 # Custom React hooks
-├── lib/                   # DB & API helpers
-├── server/                # Models, API route handlers
-│   ├── models/            # Mongoose schemas
-│   └── routes/            # Express-style routes
-├── public/                # Static assets
-├── styles/                # Tailwind / global CSS
-├── package.json
-└── next.config.mjs
-```
-
-
-## 🚀 Getting Started
-
-### ⚡ Installation
+###  Installation
 
 ```bash
 git clone https://github.com/your-username/agromate.git
@@ -195,38 +145,14 @@ Visit: [http://localhost:3000](http://localhost:3000)
 
 | Feature                | Description                                          |
 | ---------------------- | ---------------------------------------------------- |
-| 📊 Real-time Dashboard | Displays live NPK, Temp, Humidity, Moisture data     |
-| 📈 Historical Charts   | Shows past trends with line/bar charts (Chart.js)    |
-| 🛰️ REST API           | Sensors POST JSON data, dashboard fetches with GET   |
-| 🛠️ Modular UI         | Reusable card & chart components under `/components` |
-| 🗃️ MongoDB Storage    | Archives all sensor readings for historical analysis |
+|  Real-time Dashboard | Displays live NPK, Temp, Humidity, Moisture data     |
+|  Historical Charts   | Shows past trends with line/bar charts (Chart.js)    |
+|  REST API           | Sensors POST JSON data, dashboard fetches with GET   |
+|  Modular UI         | Reusable card & chart components under `/components` |
+|  MongoDB Storage    | Archives all sensor readings for historical analysis |
 
 
-##  Example API Usage
-
-###  POST New Data (from ESP32)
-
-```http
-POST /api/esp32/addData
-Content-Type: application/json
-{
-  "nitrogen": 45,
-  "phosphorus": 30,
-  "potassium": 50,
-  "temperature": 26.5,
-  "humidity": 43,
-  "moisture": 382
-}
-```
-
-## 📊 Live Dashboard Screenshots
-
-| Home                                        | Dashboard                                      | History                                    |
-| ------------------------------------------- | ---------------------------------------------- | ------------------------------------------ |
-| ![Home](./output-snapshots/Home-Screen.png) | ![Dashboard](./output-snapshots/DashBoard.jpg) | ![History](./output-snapshots/History.png) |
-
-
-## 🚀 Build & Deploy
+##  Build & Deploy
 
 ```bash
 npm run build
