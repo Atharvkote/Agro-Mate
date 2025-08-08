@@ -35,41 +35,6 @@ graph TD
 
 ```
 
-##  Folder Structure
-
-```
-arduino/
-├── docs/
-│   ├── arduino_microcontroller.md     # Info about Arduino Uno/Nano setup
-│   ├── dht11_sensor.md                # DHT11 wiring and usage
-│   ├── esp32_microcontroller.md       # ESP32 setup guide
-│   └── soil_moisture.md               # Capacitive soil moisture guide
-├── sketches/
-│   ├── SensorReader.ino               # Reads NPK + DHT11 + Soil Moisture
-│   └── WifiModule.ino                 # Sends data to server via Wi-Fi
-└── README.md                          # This file
-
-web-app/
-├── app/                   # App routing and layout (Next.js app directory)
-├── components/            # React UI components (charts, cards, etc.)
-├── functions/             # Data processing utilities
-├── hooks/                 # Custom React hooks
-├── lib/                   # API clients, DB setup, etc.
-├── public/                # Static assets (images, icons)
-├── server/                # Backend API routes & DB logic
-│   ├── models/            # MongoDB models (e.g., NPKReading.js)
-│   ├── routes/            # Express-style route handlers
-│   └── server.js          # API server entry (if custom)
-├── styles/                # (optional) Global CSS
-├── README.md              # This file
-├── .gitignore
-├── next.config.mjs        # Next.js configuration
-├── eslint.config.mjs      # ESLint setup
-├── package.json
-└── postcss.config.mjs     # Tailwind/PostCSS config
-```
-
-
 
 ##  Getting Started
 
